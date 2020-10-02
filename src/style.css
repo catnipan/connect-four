@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+}
+
+#app {
+  background: blue;
+  height: 100px;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1em;
+  padding: 1em;
+  text-align: center;
+}
+
+#game-canvas {
+}
+
+a {
+  display: block;
+  line-height: 2em;
+  cursor: pointer;
+  background: rebeccapurple;
+}
+
+a:hover {
+  color: rebeccapurple;
+  background: yellow;
+}
+
+a.disabled {
+  background: gray;
+  cursor: default;
+}
+
+input {
+  background: blue;
+  border: none;
+  border-bottom: 1px solid white;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  line-height: 3em;
+  font-family: 1.3em;
+}
