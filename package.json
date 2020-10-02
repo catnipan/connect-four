@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm dist/bundle.js",
     "dev": "parcel src/index.html -p 1234",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --public-url /g/connect-four"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,6 @@
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
-    "antd": "^4.6.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "stats.js": "^0.17.0",
