@@ -57,10 +57,11 @@ spotLight.shadow.camera.near = 1;
 spotLight.shadow.camera.far = 1000;
 spotLight.shadow.camera.fov = 30;
 scene.add(spotLight);
-var spotLightHelper = new THREE.SpotLightHelper(spotLight);
-var debugCamera = new THREE.CameraHelper(spotLight.shadow.camera);
-scene.add(debugCamera);
-scene.add(spotLightHelper);
+
+// var spotLightHelper = new THREE.SpotLightHelper(spotLight);
+// var debugCamera = new THREE.CameraHelper(spotLight.shadow.camera);
+// scene.add(debugCamera);
+// scene.add(spotLightHelper);
 
 var material = new THREE.LineBasicMaterial({ color: 0xe0e0e0 });
 var line = new THREE.Line(GridGeometry(100, 2), material, THREE.LineSegments);
