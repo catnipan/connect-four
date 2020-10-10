@@ -8,8 +8,8 @@ function createWebSocketConnection() {
   return new Promise((resolve, reject) => {
     const { location } = window;
     const proto = location.protocol.startsWith('https') ? 'wss' : 'ws';
-    // const wsUri = `${proto}://${location.host}/api/g/connect-four`;
-    const wsUri = `ws://localhost:3000/api/g/connect-four`;
+    const wsUri = `${proto}://${location.host}/api/g/connect-four`;
+    // const wsUri = `ws://localhost:3000/api/g/connect-four`;
     const socket = new WebSocket(wsUri);
     socket.onopen = () => {
       resolve(socket);
