@@ -103,12 +103,12 @@ const getX = (column) => (column - 3) * GAP;
 const getY = (row) => 1.3 + row * BALL_RADIUS * 2;
 const INITIAL_Y = 20;
 
-const triangle = new THREE.Mesh(TriangleGeometry(1.6, 1.2, 0.1), new THREE.MeshBasicMaterial({ color: 'red' }));
-const SIGN_Y = getY(6) + 1;
-let signClock = 0;
-triangle.position.y = SIGN_Y;
-triangle.rotateX(Math.PI / 2);
-scene.add(triangle);
+// const triangle = new THREE.Mesh(TriangleGeometry(1.6, 1.2, 0.1), new THREE.MeshBasicMaterial({ color: 'red' }));
+// const SIGN_Y = getY(6) + 1;
+// let signClock = 0;
+// triangle.position.y = SIGN_Y;
+// triangle.rotateX(Math.PI / 2);
+// scene.add(triangle);
 
 for (let i = 0; i < 7; ++i) {
   let curr = cylinder.clone();
@@ -189,8 +189,8 @@ function renderLoop() {
     }
   }
 
-  signClock += 0.2;
-  triangle.position.y = SIGN_Y + Math.sin(signClock) * 0.15;
+  // signClock += 0.2;
+  // triangle.position.y = SIGN_Y + Math.sin(signClock) * 0.15;
 
   requestAnimationFrame(renderLoop);
   renderer.render(scene, camera);
