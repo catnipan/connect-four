@@ -25,6 +25,25 @@ const reducer = (state, action) => {
         page: action.payload,
         failReason: undefined,
       }
+    case 'PLAY_WITH_COMPUTER':
+      return {
+        ...state,
+        page: PageStatus.PlayWithComputer,
+        gaming: GamingStatus.Pending,
+        outcome: undefined,
+      }
+    case 'RANDOM_PAIR':
+      return {
+        ...state,
+        page: PageStatus.RandomPair,
+        gaming: GamingStatus.Waiting,
+        outcome: undefined,
+      }
+    case 'SET_RANDOM_PAIR_MATCHED':
+      return {
+        ...state,
+        gaming: GamingStatus.Pending,
+      }
     case 'SET_START_GAME':
       return {
         ...state,
@@ -45,10 +64,12 @@ const reducer = (state, action) => {
         gaming: GamingStatus.Pending,
         outcome: action.outcome,
       }
-    case 'SET_NEW_ROOM_NO':
+    case 'SET_NEW_ROOM_CREATED':
       return {
         ...state,
-        roomNo: action.payload
+        roomNo: action.roomNo,
+        page: PageStatus.PlayWithFriends,
+        outcome: undefined,
       }
     case 'SET_JOIN_ROOM_FAIL':
       return {
@@ -87,7 +108,10 @@ const reducer = (state, action) => {
         chatMessage: state.chatMessage.filter(({ key }) => key != action.payload),
       }
     case 'SET_FRIEND_LEFT':
-      return {
+      return state.page == PageStatus.RandomPair ? {
+        ...state,
+        page: PageStatus.Welcome
+      } : {
         ...state,
         gaming: GamingStatus.Waiting,
       }

@@ -185,7 +185,7 @@ function renderLoop() {
       delete ball.position.destinationY;
       animationBalls.delete(ball);
     } else {
-      ball.position.y += (ball.position.destinationY - ball.position.y) * 0.13;
+      ball.position.y += (ball.position.destinationY - ball.position.y) * 0.2;
     }
   }
 

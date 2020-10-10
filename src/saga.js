@@ -46,45 +46,6 @@ function createGameCanvasChannel(gameCanvas) {
   });
 }
 
-// const noop = () => {};
-
-// let socket = null;
-// let connected = false;
-
-// const reset = () => {
-//   connected = false;
-//   socket = null;
-// }
-
-// const connect = (then = noop) => {
-//   socket = new WebSocket(wsUri);
-//   socket.onopen = () => {
-//     connected = true;
-//     then();
-//   }
-//   socket.onmessage = (ev) => {
-//     store.dispatch({
-//       type: 'SERVER_MESSAGE',
-//       payload: ev.data,
-//     })
-//   }
-//   socket.onclose = () => {
-//     reset();
-//   }
-// };
-
-// const send = (data) => {
-//   if (connected) {
-//     socket.send(data);
-//   } else {
-//     connect(() => send(data));
-//   }
-// }
-
-// const server = {
-//   send
-// };
-
 const handlerMap = {
   GAME_START: function*(myTurn) {
     yield put({ type: 'RESET_GAME' });
@@ -106,13 +67,9 @@ const handlerMap = {
   },
   NEW_ROOM_CREATED: function*(roomNo) {
     yield put({
-      type: 'SET_NEW_ROOM_NO',
-      payload: roomNo,
-    });
-    yield put({
-      type: 'UPDATE_STATUS',
-      payload: PageStatus.PlayWithFriends
-    });
+      type: 'SET_NEW_ROOM_CREATED',
+      roomNo,
+    })
   },
   ROOM_JOIN_FAIL: function*(failReason) {
     yield put({
@@ -148,6 +105,9 @@ const handlerMap = {
     yield put({ type: 'SET_FRIEND_LEFT' });
     yield put({ type: 'RESET_GAME' });
   },
+  RANDOM_PAIR_MATCHED: function*() {
+    yield put({ type: 'SET_RANDOM_PAIR_MATCHED' });
+  }
 }
 
 function* cleanChatMsg(chatMsgId) {
@@ -211,6 +171,12 @@ function* rootSaga() {
   yield takeEvery('RESET_GAME', function* () {
     yield call(gameCanvas.clear);
   });
+  yield takeEvery('PLAY_WITH_COMPUTER', function*(){
+    yield put({ type: 'SEND_TO_SERVER', payload: '/play_with_computer' });
+  });
+  yield takeEvery('RANDOM_PAIR', function*() {
+    yield put({ type: 'SEND_TO_SERVER', payload: '/join_pool' });
+  })
   /* join room link */
   const roomNo = yield call(getRoomNo);
   if (roomNo != undefined) {
