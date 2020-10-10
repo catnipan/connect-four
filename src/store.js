@@ -24,6 +24,8 @@ const reducer = (state, action) => {
         ...state,
         page: action.payload,
         failReason: undefined,
+        myTurn: undefined,
+        waitTurn: undefined,
       }
     case 'PLAY_WITH_COMPUTER':
       return {

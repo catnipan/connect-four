@@ -8,8 +8,8 @@ function createWebSocketConnection() {
   return new Promise((resolve, reject) => {
     const { location } = window;
     const proto = location.protocol.startsWith('https') ? 'wss' : 'ws';
-    const wsUri = `${proto}://${location.host}/api/g/connect-four`;
-    // const wsUri = `ws://localhost:3000/api/g/connect-four`;
+    // const wsUri = `${proto}://${location.host}/api/g/connect-four`;
+    const wsUri = `ws://localhost:3000/api/g/connect-four`;
     const socket = new WebSocket(wsUri);
     socket.onopen = () => {
       resolve(socket);
@@ -59,11 +59,19 @@ const handlerMap = {
   },
   GAME_END: function*(outcome, winner, keymoves) {
     const myTurn = yield select(state => state.myTurn);
-    const userOutcome = (outcome === "TIE") ? "TIE" : (parseInt(winner) == myTurn ? "WIN" : "LOSE");
+    winner = parseInt(winner);
+    keymoves = JSON.parse(keymoves);
+    const userOutcome = (outcome === "TIE") ? "TIE" : (winner == myTurn ? "WIN" : "LOSE");
     yield put({
       type: 'SET_END_GAME',
       outcome: userOutcome,
     });
+    if (outcome != "TIE") {
+      for (let [r, c] of keymoves) {
+        yield call(gameCanvas.annotate, r, c, winner);
+        yield delay(100);
+      }
+    }
   },
   NEW_ROOM_CREATED: function*(roomNo) {
     yield put({
@@ -148,7 +156,10 @@ function* gameCanvasChannel() {
   const channel = yield call(createGameCanvasChannel, gameCanvas);
   while (true) {
     const column = yield take(channel);
-    yield put({ type: 'SEND_TO_SERVER', payload: `/move ${column}` });
+    const { waitTurn, myTurn } = yield select();
+    if (waitTurn === myTurn && myTurn != undefined) {
+      yield put({ type: 'SEND_TO_SERVER', payload: `/move ${column}` });
+    }
   }
 }
 

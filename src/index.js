@@ -10,7 +10,7 @@ import store from './store';
 import { Provider } from 'react-redux'
 import "./style.css";
 
-GameCanvas.render('game-canvas');
+GameCanvas.render('game-canvas', store);
 
 ReactDOM.render(
   <Provider store={store}>
