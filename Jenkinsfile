@@ -6,9 +6,14 @@ pipeline {
         }
     }
     stages {
-        stage('Build') { 
+        stage('Install Dependencies') { 
             steps {
-                sh 'npm install' 
+                sh 'npm install'
+            }
+        }
+        stage('Build and Deliver') {
+            steps {
+                sh 'npm run build'
             }
         }
     }
