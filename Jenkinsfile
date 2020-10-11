@@ -1,11 +1,10 @@
 pipeline {
-    agent any
-    // agent {
-    //     docker {
-    //         image 'node:12-alpine' 
-    //         args '-p 3030:3030' 
-    //     }
-    // }
+    agent {
+        docker {
+            image 'node:12-alpine' 
+            args '-p 3030:3030 -v /root/test:/root/www/g/connect-four' 
+        }
+    }
     stages {
         stage('Install Dependencies') { 
             steps {
