@@ -59,14 +59,19 @@ const handlerMap = {
   },
   GAME_END: function*(outcome, winner, keymoves) {
     const myTurn = yield select(state => state.myTurn);
-    winner = parseInt(winner);
-    keymoves = JSON.parse(keymoves);
-    const userOutcome = (outcome === "TIE") ? "TIE" : (winner == myTurn ? "WIN" : "LOSE");
-    yield put({
-      type: 'SET_END_GAME',
-      outcome: userOutcome,
-    });
-    if (outcome != "TIE") {
+    if (outcome === "TIE") {
+      yield put({
+        type: 'SET_END_GAME',
+        outcome: outcome,
+      });
+    } else {
+      winner = parseInt(winner);
+      keymoves = JSON.parse(keymoves);
+      const userOutcome = winner == myTurn ? "WIN" : "LOSE";
+      yield put({
+        type: 'SET_END_GAME',
+        outcome: userOutcome,
+      });
       for (let [r, c] of keymoves) {
         yield call(gameCanvas.annotate, r, c, winner);
         yield delay(100);
