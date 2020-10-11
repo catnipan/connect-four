@@ -1,10 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:12-alpine' 
-            args '-p 3030:3030' 
-        }
-    }
+    agent any
+    // agent {
+    //     docker {
+    //         image 'node:12-alpine' 
+    //         args '-p 3030:3030' 
+    //     }
+    // }
     stages {
         stage('Install Dependencies') { 
             steps {
