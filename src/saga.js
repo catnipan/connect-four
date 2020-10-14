@@ -4,12 +4,17 @@ import gameCanvas from './game-canvas';
 import { PageStatus } from './status';
 import getRoomNo from './get-room-no';
 
+let wsUri;
+if (process.env.NODE_ENV == 'development') {
+  wsUri = `ws://localhost:3000/api/g/connect-four`;
+} else {
+  const { location } = window;
+  const proto = location.protocol.startsWith('https') ? 'wss' : 'ws';
+  wsUri = `${proto}://${location.host}/api/g/connect-four`;
+}
+
 function createWebSocketConnection() {
   return new Promise((resolve, reject) => {
-    const { location } = window;
-    const proto = location.protocol.startsWith('https') ? 'wss' : 'ws';
-    const wsUri = `${proto}://${location.host}/api/g/connect-four`;
-    // const wsUri = `ws://localhost:3000/api/g/connect-four`;
     const socket = new WebSocket(wsUri);
     socket.onopen = () => {
       resolve(socket);
